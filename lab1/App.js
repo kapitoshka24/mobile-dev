@@ -5,60 +5,40 @@ import Picker from "react-native-picker-select";
 import pickerStyles from "./styles/pickerStyles";
 import styles from "./styles/styles";
 import inputStyles from "./styles/inputStyles";
-import {
-  useFonts,
-  Montserrat_400Regular,
-  CedarvilleCursive_400Regular,
-  Monofett_400Regular,
-  MedievalSharp_400Regular,
-  Smythe_400Regular,
-  Viga_400Regular,
-  BeVietnam_400Regular,
-  Meddon_400Regular,
-  AveriaSansLibre_400Regular,
-  Peralta_400Regular,
-  Pacifico_400Regular,
-} from "@expo-google-fonts/dev";
+import fonts from "./libs/fonts";
+import { useFonts } from "@expo-google-fonts/dev";
 
 export default function App() {
   const [inputValue, setInputValue] = useState();
   const [selectedFont, setSelectedFont] = useState(null);
   const [outputValue, setOutputValue] = useState();
-  const [loaded] = useFonts({
-    Montserrat_400Regular,
-    CedarvilleCursive_400Regular,
-    Monofett_400Regular,
-    MedievalSharp_400Regular,
-    Smythe_400Regular,
-    Viga_400Regular,
-    BeVietnam_400Regular,
-    AveriaSansLibre_400Regular,
-    Meddon_400Regular,
-    Peralta_400Regular,
-    Pacifico_400Regular,
-  });
+  const [isApplied, setIsApplied] = useState(false);
+  const [loaded] = useFonts({ ...fonts });
 
   if (!loaded) {
     return null;
   }
 
   const onApply = () => {
-    setOutputValue(inputValue);
+    setOutputValue(inputValue ? inputValue : "");
+    setIsApplied(true);
   };
 
   const onCancel = () => {
     setOutputValue("");
     setInputValue("");
     setSelectedFont(null);
+    setIsApplied(false);
   };
 
   const outputStyle = (font) => ({
     fontSize: 16,
     marginBottom: 20,
-    fontFamily: font,
+    fontFamily: outputValue ? font : null,
     marginLeft: 25,
     marginRight: 25,
     textAlign: "center",
+    color: isApplied && outputValue ? "black" : "red",
   });
 
   return (
@@ -98,7 +78,9 @@ export default function App() {
         style={inputStyles.textInput}
       />
 
-      <Text style={outputStyle(selectedFont)}>{outputValue}</Text>
+      <Text style={outputStyle(selectedFont)}>
+        {isApplied ? outputValue || "Empty input! Enter something!" : ""}
+      </Text>
 
       <View style={styles.fixToText}>
         <TouchableOpacity style={styles.button} onPress={onApply}>
