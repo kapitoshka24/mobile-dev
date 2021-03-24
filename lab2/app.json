@@ -1,0 +1,14 @@
+{
+  "name": "lab2",
+  "displayName": "lab2",
+  "expo": {
+    "name": "lab2",
+    "slug": "lab2",
+    "version": "1.0.0",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "bundleIdentifier": "com.nataliia.lab2",
+      "buildNumber": "1.0.0"
+    }
+  }
+}
