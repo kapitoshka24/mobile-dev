@@ -30,7 +30,6 @@ export default function OutputController({
     color: isApplied && outputValue ? "black" : "red",
   });
 
-  console.log(selectedFont);
   return (
     <View>
       <Text style={outputStyle(selectedFont)}>
